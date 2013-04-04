@@ -16,3 +16,8 @@ project/plugins/project/
 # Gradle
 build
 .gradle
+
+# Eclipse 
+.project
+.classpath
+.settings
