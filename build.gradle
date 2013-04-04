@@ -10,7 +10,7 @@ apply plugin: 'idea'
  
 ext {
 	//Change this with your scalafx executable file path
-	mainClass = "org.scalafx.demo.HelloScalaFX"
+	mainClass = "org.scalafx.abacussfx.HelloScalaFX"
 
     scalaVersion = '2.9.3'
     scalaGroup = 'org.scala-lang'
