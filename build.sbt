@@ -20,7 +20,7 @@ libraryDependencies += "org.scalafx" % "scalafx_2.9.3" % "1.0.0-M2"
 
 // set the main class for the main 'run' task
 // change Compile to Test to set it for 'test:run'
-mainClass in (Compile, run) := Some("org.scalafx.demo.HelloScalaFX")
+mainClass in (Compile, run) := Some("org.scalafx.abacussfx.HelloScalaFX")
 
 // set the prompt (for this build) to include the project id.
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
