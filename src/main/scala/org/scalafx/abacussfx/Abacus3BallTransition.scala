@@ -39,17 +39,7 @@ import scalafx.util.Duration
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-object Abacus3BallTransition extends JFXApp {
-
-    val ROW_COUNT = 10
-    val COL_COUNT = 10
-    val RADIUS = 20
-    val DIAMETER = RADIUS * 2
-    val MOVE_WAY = DIAMETER * 8
-    val WIDTH = COL_COUNT * DIAMETER + MOVE_WAY
-    val HEIGHT = ROW_COUNT * DIAMETER
-    val PADDING = 20
-    val OFFSET = PADDING + RADIUS
+object Abacus3BallTransition extends JFXApp  with AbacusCommon{
 
     var circles: Seq[Circle] = null
 

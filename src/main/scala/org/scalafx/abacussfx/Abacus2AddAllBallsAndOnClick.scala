@@ -36,17 +36,9 @@ import scalafx.scene.Scene
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-object Abacus2AddAllBallsAndOnClick extends JFXApp {
+object Abacus2AddAllBallsAndOnClick extends JFXApp with AbacusCommon {
 
-    val ROW_COUNT = 10
-    val COL_COUNT = 10
-    val RADIUS = 20
-    val DIAMETER = 2 * RADIUS
-    val WIDTH = COL_COUNT * DIAMETER
-    val HEIGHT = ROW_COUNT * DIAMETER
-    val MOVE_WAY = 100
-
-    var circles: Seq[Circle] = null
+     var circles: Seq[Circle] = null
 
     stage = new PrimaryStage {
         title = "scalaFX Abacus"

@@ -40,18 +40,7 @@ import scalafx.scene.layout.Pane
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-object Abacus4RailAndTextBinding extends JFXApp {
-
-    val ROW_COUNT = 10
-    val COL_COUNT = 10
-    val RADIUS = 20
-    val DIAMETER = RADIUS * 2
-    val MOVE_WAY = DIAMETER * 8
-    val WIDTH = COL_COUNT * DIAMETER + MOVE_WAY
-    val HEIGHT = ROW_COUNT * DIAMETER
-    val PADDING = 20
-    val OFFSET = PADDING + RADIUS
-    val RAIL_HEIGHT = 10
+object Abacus4RailAndTextBinding extends JFXApp  with AbacusCommon {
 
     var circles: Seq[Circle] = null
     var rails: Seq[Rectangle] = null
