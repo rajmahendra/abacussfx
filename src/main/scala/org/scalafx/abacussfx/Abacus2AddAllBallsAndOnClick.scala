@@ -1,5 +1,6 @@
 package org.scalafx.abacussfx
 
+import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.shape.Circle
@@ -15,23 +16,28 @@ object Abacus2AddAllBallsAndOnClick extends JFXApp {
   val WIDTH = COL_COUNT * DIAMETER
   val HEIGHT = ROW_COUNT * DIAMETER
   val MOVE_WAY = 100
-  
-  var circles : Array[Circle] = new Array[Circle](10)
-  
 
-  for (row <- 0 to ROW_COUNT) {
-      for (column <- 0 to COL_COUNT) {
-    	  circles  :+ makeCircle( 1,2)
-      }
-    }
+  var circles: Seq[Circle] = null
 
   stage = new PrimaryStage {
     title = "scalaFX Abacus"
-  
+      width = WIDTH + MOVE_WAY
+      height = HEIGHT
+
+    circles = for (
+      row <- 0 to ROW_COUNT;
+      column <- 0 to COL_COUNT
+    ) yield new Circle {
+      radius = RADIUS - 1
+      centerX = RADIUS + (column * DIAMETER)
+      centerY = RADIUS + (row * DIAMETER)
+
+      onMouseClicked = { translateX = MOVE_WAY }
+    }
+
     scene = new Scene {
       content = circles
     }
-
   }
 
   private def makeCircle(row: Int, column: Int): Circle = {
