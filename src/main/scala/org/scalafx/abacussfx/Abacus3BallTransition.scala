@@ -55,7 +55,7 @@ object Abacus3BallTransition extends JFXApp  with AbacusCommon{
         ball.onMouseClicked = (e: MouseEvent) => {
             var translateBall = new TranslateTransition {
                 node = ball
-                toX = if ((ball.translateX > 1).get()) 0 else MOVE_WAY
+                toX = if (ball.translateX() > 1) 0 else MOVE_WAY
                 duration = Duration(200)
             }.playFromStart
         }
