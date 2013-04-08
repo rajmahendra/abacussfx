@@ -41,7 +41,7 @@ import scalafx.util.Duration
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-object Abacus5PushNeighbors extends JFXApp with AbacusCommon {
+object Abacus5PushNeighbors extends JFXApp with AbacusCommons {
 
     var circles: Seq[Circle] = null
     var rails: Seq[Rectangle] = null
@@ -71,6 +71,13 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommon {
             }.playFromStart
         }
         var lastBall: Circle = new Circle
+        
+        if (lastBall != null ) {
+            lastBall.translateX.addListener = (observableValue: ObservableValue, oldX: Number,newX: Number ) => {
+                
+            }
+        }
+        
         val text = new Text {
             x = ball.getCenterX - 3
             y = ball.getCenterY + 4
@@ -83,11 +90,7 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommon {
         texts = texts :+ text
         
         
-        if (lastBall != null ) {
-            lastBall.translateX.addListener = (observableValue: ObservableValue, oldX: Number,newX: Number )=> {
-                
-            }
-        }
+        
 
         ball
     }

@@ -41,7 +41,7 @@ import scalafx.util.Duration
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-object Abacus4RailAndTextBinding extends JFXApp with AbacusCommon {
+object Abacus4RailAndTextBinding extends JFXApp with AbacusCommons {
 
     var circles: Seq[Circle] = null
     var rails: Seq[Rectangle] = null

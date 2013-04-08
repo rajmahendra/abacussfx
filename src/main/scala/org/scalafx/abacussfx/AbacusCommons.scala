@@ -31,7 +31,7 @@ package org.scalafx.abacussfx
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-trait AbacusCommon {
+trait AbacusCommons {
     val ROW_COUNT = 10
     val COL_COUNT = 10
     val RADIUS = 20

@@ -36,7 +36,7 @@ import scalafx.scene.Scene
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-object Abacus2AddAllBallsAndOnClick extends JFXApp with AbacusCommon {
+object Abacus2AddAllBallsAndOnClick extends JFXApp with AbacusCommons {
 
      var circles: Seq[Circle] = null
 
