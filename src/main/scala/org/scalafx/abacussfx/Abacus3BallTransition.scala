@@ -39,7 +39,7 @@ import scalafx.util.Duration
   *
   *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
   */
-object Abacus3BallTransition extends JFXApp  with AbacusCommon{
+object Abacus3BallTransition extends JFXApp with AbacusCommon {
 
     var circles: Seq[Circle] = null
 

@@ -37,62 +37,62 @@ import scalafx.scene.text.Text
 import scalafx.scene.layout.Pane
 import scalafx.util.Duration
 /**
- * This program shows how to draw rails using Rectangle shape and using text.
- *
- *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
- */
+  * This program shows how to draw rails using Rectangle shape and using text.
+  *
+  *  @author Rajmahendra Hegde <rajmahendra@gmail.com>
+  */
 object Abacus4RailAndTextBinding extends JFXApp with AbacusCommon {
 
-  var circles: Seq[Circle] = null
-  var rails: Seq[Rectangle] = null
-  var texts: Seq[Text] = Seq.empty
+    var circles: Seq[Circle] = null
+    var rails: Seq[Rectangle] = null
+    var texts: Seq[Text] = Seq.empty
 
-  rails = for (row <- 0 to ROW_COUNT) yield new Rectangle {
-    width = WIDTH
-    height = RAIL_HEIGHT
-    x = PADDING
-    y = OFFSET - (RAIL_HEIGHT / 2) + (row * DIAMETER)
-  }
-
-  circles = for (
-    row <- 0 to ROW_COUNT;
-    col <- 0 to COL_COUNT
-  ) yield {
-    val ball = new Circle {
-      radius = RADIUS - 1
-      centerX = OFFSET + (col * DIAMETER)
-      centerY = OFFSET + (row * DIAMETER)
-    }
-    ball.onMouseClicked = (e: MouseEvent) => {
-      var translateBall = new TranslateTransition {
-        node = ball
-        toX = if (ball.translateX() > 1) 0 else MOVE_WAY
-        duration = Duration(200)
-      }.playFromStart
+    rails = for (row <- 0 to ROW_COUNT) yield new Rectangle {
+        width = WIDTH
+        height = RAIL_HEIGHT
+        x = PADDING
+        y = OFFSET - (RAIL_HEIGHT / 2) + (row * DIAMETER)
     }
 
-    val text = new Text {
-      x = ball.getCenterX - 3
-      y = ball.getCenterY + 4
-      text = "" + ((COL_COUNT - col) % COL_COUNT)
-      translateX bind ball.translateX
-      onMouseClicked = ball.onMouseClicked
-      fill = WHITE
+    circles = for (
+        row <- 0 to ROW_COUNT;
+        col <- 0 to COL_COUNT
+    ) yield {
+        val ball = new Circle {
+            radius = RADIUS - 1
+            centerX = OFFSET + (col * DIAMETER)
+            centerY = OFFSET + (row * DIAMETER)
+        }
+        ball.onMouseClicked = (e: MouseEvent) => {
+            var translateBall = new TranslateTransition {
+                node = ball
+                toX = if (ball.translateX() > 1) 0 else MOVE_WAY
+                duration = Duration(200)
+            }.playFromStart
+        }
+
+        val text = new Text {
+            x = ball.getCenterX - 3
+            y = ball.getCenterY + 4
+            text = "" + ((COL_COUNT - col) % COL_COUNT)
+            translateX bind ball.translateX
+            onMouseClicked = ball.onMouseClicked
+            fill = WHITE
+        }
+
+        texts = texts :+ text
+
+        ball
     }
 
-    texts = texts :+ text
+    stage = new PrimaryStage {
+        title = "scalaFX Abacus"
+        width = WIDTH + 2 * PADDING
+        height = HEIGHT + 2 * PADDING
 
-    ball
-  }
-
-  stage = new PrimaryStage {
-    title = "scalaFX Abacus"
-    width = WIDTH + 2 * PADDING
-    height = HEIGHT + 2 * PADDING
-
-    scene = new Scene {
-      content = rails ++ circles ++ texts
+        scene = new Scene {
+            content = rails ++ circles ++ texts
+        }
     }
-  }
 
 }
