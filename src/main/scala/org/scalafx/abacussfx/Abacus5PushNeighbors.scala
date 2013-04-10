@@ -36,6 +36,9 @@ import scalafx.scene.paint.Color._
 import scalafx.scene.text.Text
 import scalafx.scene.layout.Pane
 import scalafx.util.Duration
+import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableValue
+
 /**
   * This program shows how to draw rails using Rectangle shape and using text.
   *
@@ -47,7 +50,7 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommons {
     var rails: Seq[Rectangle] = null
     var texts: Seq[Text] = Seq.empty
 
-    rails = for (row <- 0 to ROW_COUNT) yield new Rectangle {
+    rails = for (row <- 0 until ROW_COUNT) yield new Rectangle {
         width = WIDTH
         height = RAIL_HEIGHT
         x = PADDING
@@ -58,26 +61,20 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommons {
         row <- 0 to ROW_COUNT;
         col <- 0 to COL_COUNT
     ) yield {
+        var last: Circle = null
         val ball = new Circle {
             radius = RADIUS - 1
             centerX = OFFSET + (col * DIAMETER)
             centerY = OFFSET + (row * DIAMETER)
         }
         ball.onMouseClicked = (e: MouseEvent) => {
-            var translateBall = new TranslateTransition {
+            val translateBall = new TranslateTransition {
                 node = ball
                 toX = if (ball.translateX() > 1) 0 else MOVE_WAY
                 duration = Duration(200)
             }.playFromStart
         }
-        var lastBall: Circle = new Circle
-        
-        if (lastBall != null ) {
-            lastBall.translateX.addListener = (observableValue: ObservableValue, oldX: Number,newX: Number ) => {
-                
-            }
-        }
-        
+
         val text = new Text {
             x = ball.getCenterX - 3
             y = ball.getCenterY + 4
@@ -86,12 +83,27 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommons {
             onMouseClicked = ball.onMouseClicked
             fill = WHITE
         }
-
         texts = texts :+ text
-        
-        
-        
 
+        if (last != null) {
+            last.translateXProperty.addListener(new ChangeListener[Any] {
+                override def changed(observable: ObservableValue[_], oldValue: Any, newValue: Any) {
+                    val newX = newValue.asInstanceOf[Number]
+                    if (newX.doubleValue > ball.translateXProperty().get)
+                        ball setTranslateX newX.doubleValue
+                }
+            })
+            val finalLast = last
+            ball.translateXProperty().addListener(new ChangeListener[Any] {
+                override def changed(observable: ObservableValue[_], oldValue: Any, newValue: Any) {
+                    val newX = newValue.asInstanceOf[Number]
+                    if (newX.doubleValue > finalLast.translateXProperty().get)
+                        ball setTranslateX newX.doubleValue
+                }
+            })
+
+        }
+        last = ball
         ball
     }
 
