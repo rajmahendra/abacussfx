@@ -34,12 +34,19 @@ package org.scalafx.abacussfx
 trait AbacusCommons {
     val ROW_COUNT = 10
     val COL_COUNT = 10
+
     val RADIUS = 20
     val DIAMETER = RADIUS * 2
+
     val MOVE_WAY = DIAMETER * 8
     val WIDTH = COL_COUNT * DIAMETER + MOVE_WAY
     val HEIGHT = ROW_COUNT * DIAMETER
     val PADDING = 20
     val OFFSET = PADDING + RADIUS
     val RAIL_HEIGHT = 10
+
+    val CSS_FILENAME_CASINO = "casino.css"
+    val CSS_FILE_ABACUS = "abacus.css"
+
 }
+
