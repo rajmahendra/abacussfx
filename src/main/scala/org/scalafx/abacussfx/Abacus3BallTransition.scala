@@ -44,9 +44,12 @@ object Abacus3BallTransition extends JFXApp with AbacusCommons {
     var circles: Seq[Circle] = null
 
     circles = for (
-        row <- 0 to ROW_COUNT;
-        col <- 0 to COL_COUNT
-    ) yield {
+        row <- 0 to ROW_COUNT - 1;
+        col <- 0 to COL_COUNT - 1
+    ) yield makeBalls(row, col)
+
+    private def makeBalls(row: Int, col: Int): Circle = {
+
         val ball = new Circle {
             radius = RADIUS - 1
             centerX = OFFSET + (col * DIAMETER)
@@ -63,7 +66,7 @@ object Abacus3BallTransition extends JFXApp with AbacusCommons {
     }
 
     stage = new PrimaryStage {
-        title = "scalaFX Abacus"
+        title = "Abacus 3 Ball Transition"
         width = WIDTH + 2 * PADDING
         height = HEIGHT + 2 * PADDING
 

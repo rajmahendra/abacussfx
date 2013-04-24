@@ -38,24 +38,25 @@ import scalafx.scene.Scene
   */
 object Abacus2AddAllBallsAndOnClick extends JFXApp with AbacusCommons {
 
-     var circles: Seq[Circle] = null
+    var circles: Seq[Circle] = null
 
+    circles = for (
+        row <- 0 to ROW_COUNT - 1;
+        col <- 0 to COL_COUNT - 1
+    ) yield makeBalls(row, col)
+
+    private def makeBalls(row: Int, col: Int): Circle = new Circle {
+        radius = RADIUS - 1
+        centerX = RADIUS + (col * DIAMETER)
+        centerY = RADIUS + (row * DIAMETER)
+
+        onMouseClicked = (e: MouseEvent) => { translateX = MOVE_WAY }
+    }
+    
     stage = new PrimaryStage {
-        title = "scalaFX Abacus"
-        width = WIDTH + MOVE_WAY
+        title = "Abacus 2 - Add All Balls And OnClick"
+        width = WIDTH
         height = HEIGHT
-
-        circles = for (
-            row <- 0 to ROW_COUNT;
-            column <- 0 to COL_COUNT
-        ) yield new Circle {
-            radius = RADIUS - 1
-            centerX = RADIUS + (column * DIAMETER)
-            centerY = RADIUS + (row * DIAMETER)
-
-            onMouseClicked = (e: MouseEvent) => { translateX = MOVE_WAY }
-        }
-
         scene = new Scene {
             content = circles
         }

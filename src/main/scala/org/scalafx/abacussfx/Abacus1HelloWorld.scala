@@ -43,7 +43,7 @@ object Abacus1HelloWorld extends JFXApp {
     }
 
     stage = new PrimaryStage {
-        title = "Abacus HelloWorld"
+        title = "Abacus 1 Hello World"
         width = 400
         height = 400
 

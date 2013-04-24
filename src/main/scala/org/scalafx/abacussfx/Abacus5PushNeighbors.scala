@@ -48,18 +48,13 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommons {
 
     var circles: Seq[Circle] = null
     var rails: Seq[Rectangle] = null
-    var texts: Seq[Text] = Seq.empty
+    var texts: Seq[Text] = Seq empty
 
-    rails = for (row <- 0 until ROW_COUNT) yield new Rectangle {
-        width = WIDTH
-        height = RAIL_HEIGHT
-        x = PADDING
-        y = OFFSET - (RAIL_HEIGHT / 2) + (row * DIAMETER)
-    }
+    rails = makeRails
 
     circles = for (
-        row <- 0 to ROW_COUNT;
-        col <- 0 to COL_COUNT
+        row <- 0 to ROW_COUNT - 1;
+        col <- 0 to COL_COUNT - 1
     ) yield {
         var last: Circle = null
         val ball = new Circle {
@@ -75,15 +70,7 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommons {
             }.playFromStart
         }
 
-        val text = new Text {
-            x = ball.getCenterX - 3
-            y = ball.getCenterY + 4
-            text = "" + ((COL_COUNT - col) % COL_COUNT)
-            translateX bind ball.translateX
-            onMouseClicked = ball.onMouseClicked
-            fill = WHITE
-        }
-        texts = texts :+ text
+        texts = texts :+ makeText(((COL_COUNT - col) % COL_COUNT) + "", ball)
 
         if (last != null) {
             last.translateXProperty.addListener(new ChangeListener[Any] {
@@ -107,8 +94,27 @@ object Abacus5PushNeighbors extends JFXApp with AbacusCommons {
         ball
     }
 
+    private def makeRails: Seq[Rectangle] = for (row <- 0 to ROW_COUNT - 1)
+        yield new Rectangle {
+        width = WIDTH
+        height = RAIL_HEIGHT
+        x = PADDING
+        y = OFFSET - (RAIL_HEIGHT / 2) + (row * DIAMETER)
+    }
+
+    private def makeText(label: String, ball: Circle): Text = {
+        new Text {
+            x = ball.getCenterX - 3
+            y = ball.getCenterY + 4
+            text = label //"" + ((COL_COUNT - col) % COL_COUNT)
+            translateX bind ball.translateX
+            onMouseClicked = ball.onMouseClicked
+            fill = WHITE
+        }
+    }
+
     stage = new PrimaryStage {
-        title = "scalaFX Abacus"
+        title = "Abacus 5 Push Neighbors"
         width = WIDTH + 2 * PADDING
         height = HEIGHT + 2 * PADDING
 

@@ -45,19 +45,23 @@ object Abacus4RailAndTextBinding extends JFXApp with AbacusCommons {
 
     var circles: Seq[Circle] = null
     var rails: Seq[Rectangle] = null
-    var texts: Seq[Text] = Seq.empty
+    var texts: Seq[Text] = Seq empty
 
-    rails = for (row <- 0 to ROW_COUNT) yield new Rectangle {
-        width = WIDTH
-        height = RAIL_HEIGHT
-        x = PADDING
-        y = OFFSET - (RAIL_HEIGHT / 2) + (row * DIAMETER)
-    }
+    rails = makeRails
 
     circles = for (
-        row <- 0 to ROW_COUNT;
-        col <- 0 to COL_COUNT
+        row <- 0 to ROW_COUNT - 1;
+        col <- 0 to COL_COUNT - 1
     ) yield {
+        val ball = makeBalls(row, col)
+
+        texts = texts :+ makeText(((COL_COUNT - col) % COL_COUNT) + "", ball)
+
+        ball
+    }
+
+    private def makeBalls(row: Int, col: Int): Circle = {
+
         val ball = new Circle {
             radius = RADIUS - 1
             centerX = OFFSET + (col * DIAMETER)
@@ -70,23 +74,29 @@ object Abacus4RailAndTextBinding extends JFXApp with AbacusCommons {
                 duration = Duration(200)
             }.playFromStart
         }
+        ball
+    }
 
-        val text = new Text {
+    private def makeRails: Seq[Rectangle] = for (row <- 0 to ROW_COUNT - 1) yield new Rectangle {
+        width = WIDTH
+        height = RAIL_HEIGHT
+        x = PADDING
+        y = OFFSET - (RAIL_HEIGHT / 2) + (row * DIAMETER)
+    }
+
+    private def makeText(label: String, ball: Circle): Text = {
+        new Text {
             x = ball.getCenterX - 3
             y = ball.getCenterY + 4
-            text = "" + ((COL_COUNT - col) % COL_COUNT)
+            text = label //"" + ((COL_COUNT - col) % COL_COUNT)
             translateX bind ball.translateX
             onMouseClicked = ball.onMouseClicked
             fill = WHITE
         }
-
-        texts = texts :+ text
-
-        ball
     }
 
     stage = new PrimaryStage {
-        title = "scalaFX Abacus"
+        title = "Abacus 4 Rail And Text Binding"
         width = WIDTH + 2 * PADDING
         height = HEIGHT + 2 * PADDING
 
